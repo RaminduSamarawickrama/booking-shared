@@ -55,8 +55,11 @@ export interface RegisterInput {
 }
 
 export interface AuthClientOptions {
-  /** Gateway base URL, e.g. from resolveApiConfig(). */
-  baseUrl: string;
+  /**
+   * Gateway base URL, or a function returning it so a backend switched at runtime (the
+   * connection panel) takes effect on the next request.
+   */
+  baseUrl: string | (() => string);
   store?: KeyValueStore | null;
   fetchImpl?: typeof fetch;
   now?: () => number;
@@ -105,7 +108,8 @@ export function createAuthClient(options: AuthClientOptions) {
     if (token) headers.set("Authorization", `Bearer ${token}`);
     let response: Response;
     try {
-      response = await fetchImpl(`${options.baseUrl}${path}`, { ...init, headers });
+      const base = typeof options.baseUrl === "function" ? options.baseUrl() : options.baseUrl;
+      response = await fetchImpl(`${base}${path}`, { ...init, headers });
     } catch {
       throw new ApiError(0, "network_error", "Can't reach the server. Check your connection or the backend panel.");
     }

@@ -89,6 +89,20 @@ describe("auth client", () => {
     expect((error as ApiError).fieldErrors[0].field).toBe("email");
   });
 
+  it("reads the base URL on every call so a switched backend applies at once", async () => {
+    let base = "http://one";
+    const urls: string[] = [];
+    const fetchImpl = vi.fn(async (url: RequestInfo | URL) => {
+      urls.push(String(url));
+      return json(200, session(1));
+    });
+    const client = createAuthClient({ baseUrl: () => base, fetchImpl, now: () => T0 });
+    await client.login("a", "b");
+    base = "https://two.trycloudflare.com";
+    await client.login("a", "b");
+    expect(urls).toEqual(["http://one/v1/auth/login", "https://two.trycloudflare.com/v1/auth/login"]);
+  });
+
   it("reports network failures with a helpful code", async () => {
     const client = createAuthClient({
       baseUrl: "http://api",
