@@ -1,0 +1,39 @@
+{
+  "name": "@booking/shared",
+  "version": "0.1.0",
+  "description": "Code shared by the booking web and mobile apps: backend switching and shared UI.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "sideEffects": ["*.css"],
+  "files": ["dist"],
+  "exports": {
+    "./runtime-config": {
+      "types": "./dist/runtime-config/index.d.ts",
+      "import": "./dist/runtime-config/index.js"
+    },
+    "./ui/ConnectionPanel": {
+      "types": "./dist/ui/ConnectionPanel.d.ts",
+      "import": "./dist/ui/ConnectionPanel.js"
+    },
+    "./ui/styles.css": "./dist/ui/styles.css"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && node scripts/copy-assets.mjs",
+    "prepare": "npm run build",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p ."
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": { "optional": true }
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "react": "^19.3.0",
+    "typescript": "^5.9.3",
+    "vitest": "^5.0.3"
+  },
+  "engines": { "node": ">=22" }
+}
