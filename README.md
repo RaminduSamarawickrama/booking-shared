@@ -1,9 +1,9 @@
 # booking-shared
 
-Code shared by the booking web and mobile apps, installed straight from this repo by git tag (no registry, no tokens):
+Code shared by the booking web and mobile apps, installed straight from this public repo, pinned to a commit (no registry, no tokens):
 
 ```json
-"@booking/shared": "github:RaminduSamarawickrama/booking-shared#v0.1.0"
+"@booking/shared": "github:RaminduSamarawickrama/booking-shared#<commit-sha>"
 ```
 
 | Import | Contents |
@@ -16,11 +16,11 @@ The package builds itself on install (`prepare` runs `tsc`), so consumers get pl
 
 ## Releasing a change
 
-1. Merge to `main` with CI green.
-2. Bump `version` in package.json, then tag it: `git tag v0.2.0 && git push --tags`.
-3. In each app, update the `#v…` suffix and run `npm install`.
+1. Merge to `main` with CI green and bump `version` in package.json.
+2. In each app, replace the `#<commit-sha>` suffix with the new commit and run `npm install`.
+   You can pin a tag (`#v0.2.0`) instead if you create one on GitHub.
 
-Apps pin a tag, so a change here never reaches an app until that app opts in.
+Apps pin a commit, so a change here never reaches an app until that app opts in.
 
 ## Develop
 
