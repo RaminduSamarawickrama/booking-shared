@@ -1,6 +1,6 @@
 {
   "name": "@booking/shared",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Code shared by the booking web and mobile apps: backend switching and shared UI.",
   "license": "UNLICENSED",
   "type": "module",
@@ -27,6 +27,10 @@
     "./booking": {
       "types": "./dist/booking/index.d.ts",
       "import": "./dist/booking/index.js"
+    },
+    "./payments": {
+      "types": "./dist/payments/index.d.ts",
+      "import": "./dist/payments/index.js"
     }
   },
   "scripts": {
